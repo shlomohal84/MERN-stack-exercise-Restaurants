@@ -44,9 +44,9 @@ function App() {
       <div className="container mt-3">
         <Routes>
           {/* <Route exact path={"/"} element={<RestaurantsList/>} /> */}
-          <Route exact path="/restaurants" element={<RestaurantsList user={user }/>} />
+          <Route path="/restaurants" element={<RestaurantsList user={user} />} />
           <Route path="/restaurants/:id/review" element={<AddReview />} />
-          <Route path="/restaurants/:id" element={<Restaurant user={user}/>} />
+          <Route path="/restaurants/:id" element={<Restaurant user={user} />} />
           <Route path="/login" element={<Login user={user} login={login} />} />
         </Routes>
       </div>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import RestaurantDataService from "../services/restaurant";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 
-export default function Restaurant(props){
+const Restaurant = props => {
+
+	const {id} = useParams()
 	const initialRestaurantState = {
-		id: null,
+		id,
 		name: "",
 		address: {},
 		cuisine: "",
@@ -15,8 +17,15 @@ export default function Restaurant(props){
 	const getRestaurant = id => {
 		RestaurantDataService.get(id)
 			.then(response => {
-				setRestaurant(response.data);
-				console.log(response.data);
+				// console.log(response.data.restaurants);
+				let temp
+				for (let i = 0; i < response.data.restaurants.length; i++){
+					if (response.data.restaurants[i]._id === id) {
+						temp = { ...response.data.restaurants[i]}
+					}
+				}
+				setRestaurant({...temp})
+				// console.log(restaurant)
 			})
 			.catch(e => {
 				console.log(e);
@@ -24,8 +33,10 @@ export default function Restaurant(props){
 	};
 
 	useEffect(() => {
-		getRestaurant(props.match.params.id);
-	}, [props.match.params.id]);
+		getRestaurant(id);
+	}, [id]);
+
+	
 
 	const deleteReview = (reviewId, index) => {
 		RestaurantDataService.deleteReview(reviewId, props.user.id)
@@ -44,19 +55,21 @@ export default function Restaurant(props){
 
 	return (
 		<div>
-			{restaurant ? (
+			<h1>Reviews</h1>
+
+			{id ? (
 				<div>
 					<h5>{restaurant.name}</h5>
 					<p>
 						<strong>Cuisine: </strong>{restaurant.cuisine}<br />
 						<strong>Address: </strong>{restaurant.address.building} {restaurant.address.street}, {restaurant.address.zipcode}
 					</p>
-					<Link to={"/restaurants/" + props.match.params.id + "/review"} className="btn btn-primary">
+					<Link to={"/restaurants/" + id + "/review"} className="btn btn-primary">
 						Add Review
 					</Link>
 					<h4> Reviews </h4>
 					<div className="row">
-						{restaurant.reviews.length > 0 ? (
+						{restaurant.reviews ? (
 							restaurant.reviews.map((review, index) => {
 								return (
 									<div className="col-lg-4 pb-1" key={index}>
@@ -71,7 +84,7 @@ export default function Restaurant(props){
 													<div className="row">
 														<a href onClick={() => deleteReview(review._id, index)} className="btn btn-primary col-lg-5 mx-1 mb-1">Delete</a>
 														<Link to={{
-															pathname: "/restaurants/" + props.match.params.id + "/review",
+															pathname: "/restaurants/" + id + "/review",
 															state: {
 																currentReview: review
 															}
@@ -102,3 +115,4 @@ export default function Restaurant(props){
 	);
 };
 
+export default Restaurant;
