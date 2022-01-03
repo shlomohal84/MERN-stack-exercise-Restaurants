@@ -43,11 +43,11 @@ function App() {
 
       <div className="container mt-3">
         <Routes>
-          {/* <Route exact path={"/"} element={<RestaurantsList/>} /> */}
-          <Route path="/restaurants" element={<RestaurantsList user={user} />} />
+          <Route path="/" element={<RestaurantsList/>} />
+          <Route path="/restaurants/*" element={<RestaurantsList/>} />
           <Route path="/restaurants/:id/review" element={<AddReview />} />
-          <Route path="/restaurants/:id" element={<Restaurant user={user} />} />
-          <Route path="/login" element={<Login user={user} login={login} />} />
+          <Route path="/restaurants/:id" element={<Restaurant user={user}/>} />
+          <Route path="/login" element={<Login login={login} />} />
         </Routes>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RestaurantDataService from "../services/restaurant";
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams,} from "react-router-dom";
 
 const Restaurant = props => {
 
@@ -17,15 +17,16 @@ const Restaurant = props => {
 	const getRestaurant = id => {
 		RestaurantDataService.get(id)
 			.then(response => {
-				// console.log(response.data.restaurants);
-				let temp
-				for (let i = 0; i < response.data.restaurants.length; i++){
-					if (response.data.restaurants[i]._id === id) {
-						temp = { ...response.data.restaurants[i]}
-					}
-				}
-				setRestaurant({...temp})
-				// console.log(restaurant)
+				console.log(response.data);
+				setRestaurant(response.data)
+				// let temp
+				// for (let i = 0; i < response.data.restaurants.length; i++){
+				// 	if (response.data.restaurants[i]._id === id) {
+				// 		temp = { ...response.data.restaurants[i]}
+				// 	}
+				// }
+				// setRestaurant({...temp})
+				// // console.log(restaurant)
 			})
 			.catch(e => {
 				console.log(e);
