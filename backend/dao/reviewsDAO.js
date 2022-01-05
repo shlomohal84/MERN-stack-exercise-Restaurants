@@ -15,6 +15,19 @@ export default class ReviewsDAO {
 		}
 	}
 
+	static async getReviews(reviewId) {
+		try {
+			const reviewsDoc = {
+				review_id: ObjectId(reviewId)
+			}
+			return await reviews.find({})
+		} catch (e) {
+			console.error(`Unable to get reviews: ${e}`)
+			return { error: e }
+		}
+	}
+
+
 	static async addReview(restaurantId, user, review, date) {
 		try {
 			const reviewDoc = {

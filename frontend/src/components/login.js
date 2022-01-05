@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import {Link} from 'react-router-dom'
 const Login = props => {
 
 	const initialUserState = {
@@ -16,7 +16,8 @@ const Login = props => {
 
 	const login = () => {
 		props.login(user)
-		props.history.push('/');
+		console.log(user)
+		// props.history.push('/');
 	}
 
 	return (
@@ -48,9 +49,10 @@ const Login = props => {
 					/>
 				</div>
 
-				<button onClick={login} className="btn btn-success">
+				<Link onClick={login} to="/restaurants"><button className="btn btn-success">
 					Login
 				</button>
+				</Link>
 			</div>
 		</div>
 	);

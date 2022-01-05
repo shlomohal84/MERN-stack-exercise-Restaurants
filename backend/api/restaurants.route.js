@@ -10,6 +10,7 @@ router.route("/id/:id").get(RestaurantsCtrl.apiGetRestaurantById)
 
 router
 	.route("/review")
+	.get(ReviewsController.apiGetReviews)
 	.post(ReviewsController.apiPostReview)
 	.put(ReviewsController.apiUpdateReview)
 	.delete(ReviewsController.apiDeleteReview)
